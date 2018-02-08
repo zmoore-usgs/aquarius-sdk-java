@@ -20,7 +20,7 @@ public class StatisticalDateTimeOffsetDeserializer implements JsonDeserializer<S
 
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter
             .ofPattern(
-                    "["+InstantDeserializer.Pattern+"]" +
+                    "["+InstantDeserializer.TimePattern+"]" +
                     "["+EndOfDayMidnightPattern+"]")
             .withLocale(Locale.US);
 

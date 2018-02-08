@@ -39,8 +39,11 @@ public class InstantDeserializerTest {
     private Object[] validInstantTests() {
         return new Object[]{
                 new Object[]{"Xmas 2015 AEST", "2015-12-25T00:00:00.1234567+10:00", Instant.parse("2015-12-24T14:00:00.1234567Z")},
+                new Object[]{"Xmas 2015 AEST (Partial)", "2015-12-25T00:00:00.12345+10:00", Instant.parse("2015-12-24T14:00:00.1234500Z")},
                 new Object[]{"Xmas 2016 UTC", "2016-12-25T00:00:00.1234567Z", Instant.parse("2016-12-25T00:00:00.1234567Z")},
+                new Object[]{"Xmas 2016 UTC (Partial)", "2016-12-25T00:00:00.12345Z", Instant.parse("2016-12-25T00:00:00.1234500Z")},
                 new Object[]{"Xmas 2017 PST", "2017-12-25T00:00:00.1234567-07:00", Instant.parse("2017-12-25T07:00:00.1234567Z")},
+                new Object[]{"Xmas 2017 PST (Partial)", "2017-12-25T00:00:00.12345-07:00", Instant.parse("2017-12-25T07:00:00.1234500Z")},
                 new Object[]{"MaxConcreteValue", InstantDeserializer.JsonMaxConcreteValue, InstantDeserializer.MaxConcreteValue},
                 new Object[]{"MinConcreteValue", InstantDeserializer.JsonMinConcreteValue, InstantDeserializer.MinConcreteValue},
                 new Object[]{"MaxValue", InstantDeserializer.JsonMaxValue, InstantDeserializer.MaxValue},

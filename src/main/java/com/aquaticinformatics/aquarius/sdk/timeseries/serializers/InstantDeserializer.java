@@ -8,14 +8,16 @@ import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.lang.reflect.Type;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class InstantDeserializer implements JsonDeserializer<Instant> {
 
     public static final String ZoneFieldPattern = "ZZZZZ";
-    public static final String Pattern = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSSSSSS" + ZoneFieldPattern;
+    public static final String DateTimePattern = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSSSSSS" + ZoneFieldPattern;
 
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter
-            .ofPattern(Pattern)
+            .ofPattern(DateTimePattern)
             .withLocale(Locale.US);
 
     public static final String JsonMaxValue = "MaxInstant";
@@ -33,7 +35,20 @@ public class InstantDeserializer implements JsonDeserializer<Instant> {
         return parse(jsonElement.getAsString());
     }
 
+    private static String padFractionalSeconds(String text) {
+        Pattern microPattern = Pattern.compile("\\.([0-9]*)([a-zA-Z+-].*)");
+        Matcher matcher = microPattern.matcher(text);
+        
+        if(matcher.find()) {
+            return text.substring(0, text.lastIndexOf('.') + 1) + (matcher.group(1) + "0000000").substring(0, 7) + matcher.group(2);
+        }
+
+        return text;
+    } 
+
     public static Instant parse(String text) {
+        text = padFractionalSeconds(text);
+
         if (text.equalsIgnoreCase(JsonMaxValue))
             return MaxValue;
 

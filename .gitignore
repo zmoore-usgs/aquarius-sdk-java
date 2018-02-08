@@ -21,3 +21,12 @@ Thumbs.db
 .idea/*
 !.idea/runConfigurations
 */**/.idea/
+
+#VS Code
+.vscode
+
+#NetBeans
+.project
+.classpath
+.settings
+.sts4-cache
